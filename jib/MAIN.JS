@@ -1,13 +1,29 @@
 const http = require("http");
+const fs = require("fs");
+const path = require("path");
 
 const servidor = http.createServer((req, res) => {
-  res.write("hola este es mi video juego");
-  res.end();
+  const rutaArchivo = path.join(__dirname, "HP.html");
+
+  fs.readFile(rutaArchivo, (error, data) => {
+    if (error) {
+      res.writeHead(500);
+      res.end("Error cargando la página");
+      return;
+    }
+  
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.end(data);
+  });
 });
 
-servidor.listen(2808, () => {
-  console.log("Servidor corriendo en http://localhost:2808");
-});
+const PORT = process.env.PORT || 2808;
+
+servidor.listen(PORT, () => {
+  console.log("Servidor corriendo");
+}); {
+  console.log("Servidor en http://localhost:2808");
+};
 
 let barra = document.getElementById("barra");
 
